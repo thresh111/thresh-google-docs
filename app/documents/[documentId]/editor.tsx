@@ -24,9 +24,7 @@ import { FontSizeExtension } from "@/extensions/font-size";
 
 import Ruler from "./ruler";
 
-interface EditorProps {}
-
-export function Editor(props: EditorProps) {
+export function Editor() {
   const { setEditor } = useEditorStore();
   const editor = useEditor({
     immediatelyRender: false,

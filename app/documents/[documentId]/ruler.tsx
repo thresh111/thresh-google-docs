@@ -22,7 +22,7 @@ function Ruler() {
     setIsDraggingRight(true);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((isDraggingLeft || isDraggingRight) && rulerRef.current) {
       const container = rulerRef.current.querySelector("#ruler-container");
 
@@ -66,9 +66,9 @@ function Ruler() {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      className={"h-6 border-b border-gray-300 flex items-end relative select-none print:hidden"}
+      className={"h-6 border-b w-[816px] mx-auto border-gray-300 flex items-end relative select-none print:hidden"}
     >
-      <div id="ruler-container" className={"max-w-[816px] mx-auto w-full h-full relative"}>
+      <div id="ruler-container" className={"w-full h-full relative"}>
         <Marker
           position={leftMargin}
           isLeft

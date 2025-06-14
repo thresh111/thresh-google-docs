@@ -18,6 +18,8 @@ import {
   AlignRightIcon,
   BoldIcon,
   ChevronDownIcon,
+  FileJsonIcon,
+  GlobeIcon,
   HighlighterIcon,
   ImageIcon,
   ItalicIcon,
@@ -33,9 +35,11 @@ import {
   PrinterIcon,
   Redo2Icon,
   RemoveFormattingIcon,
+  SaveIcon,
   SearchIcon,
   SpellCheckIcon,
   StrikethroughIcon,
+  TextIcon,
   UnderlineIcon,
   Undo2Icon,
   UploadIcon,
@@ -49,6 +53,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { BsFilePdf } from "react-icons/bs";
+import useEditorSave from "@/hooks/useEditorSave";
 
 interface ToolbarProps {
   onClick?: () => void;
@@ -570,6 +576,38 @@ const ToolbarButton = ({ onClick, isActive, icon: Icon, label }: ToolbarProps) =
   );
 };
 
+const SaveButton = () => {
+  const { onSaveJSON, onSaveHTML, onSaveText } = useEditorSave();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="text-sm h-7 shrink-0 p-2 flex items-center justify-between rounded-sm hover:bg-neutral-200/80 hover:cursor-pointer">
+          <SaveIcon className="size-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={onSaveJSON}>
+          <FileJsonIcon className="size-4 mr-2" />
+          Save as JSON
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onSaveHTML}>
+          <GlobeIcon className="size-4 mr-2" />
+          Save as HTML
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => window.print()}>
+          <BsFilePdf className="size-4 mr-2" />
+          Save as PDF
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onSaveText}>
+          <TextIcon className="size-4 mr-2" />
+          Save as Text
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 function Toolbar() {
   const { editor } = useEditorStore();
   const sections: { label: string; icon: LucideIcon; onClick?: () => void; isActive?: boolean }[][] = [
@@ -659,10 +697,11 @@ function Toolbar() {
 
   return (
     <div className={"w-full bg-[#f1f4f9] px-2 rounded-md min-h-[40px] flex items-center gap-x-1 overflow-x-auto"}>
-      {/* <div className={"flex items-center gap-2 w-full"}>
-        <Image src={"/logo.svg"} alt={"logo"} width={36} height={36} />
-        <span className={"text-sm font-medium"}>Ran Doc Editor</span>
-      </div> */}
+      <div className={"flex items-center gap-2 text-sm h-7 min-w-7"}>
+        <Image src={"/logo.svg"} alt={"logo"} width={20} height={20} />
+      </div>
+      <Separator orientation="vertical" className="min-h-6 bg-neutral-300" />
+      <SaveButton />
       <Separator orientation="vertical" className="min-h-6 bg-neutral-300" />
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
