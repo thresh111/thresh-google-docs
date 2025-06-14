@@ -23,6 +23,7 @@ import {
   HighlighterIcon,
   ImageIcon,
   ItalicIcon,
+  KeyboardIcon,
   LinkIcon,
   ListCollapseIcon,
   ListIcon,
@@ -608,6 +609,146 @@ const SaveButton = () => {
   );
 };
 
+const KeyboardShortcuts = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 快捷键数据
+  const shortcutSections = [
+    {
+      title: "基本操作",
+      shortcuts: [
+        { command: "复制", windows: "Ctrl + C", mac: "⌘ + C" },
+        { command: "剪切", windows: "Ctrl + X", mac: "⌘ + X" },
+        { command: "粘贴", windows: "Ctrl + V", mac: "⌘ + V" },
+        { command: "无格式粘贴", windows: "Ctrl + Shift + V", mac: "⌘ + Shift + V" },
+        { command: "撤销", windows: "Ctrl + Z", mac: "⌘ + Z" },
+        { command: "重做", windows: "Ctrl + Shift + Z", mac: "⌘ + Shift + Z" },
+        { command: "换行", windows: "Shift + Enter", mac: "Shift + Enter" },
+        { command: "全选", windows: "Ctrl + A", mac: "⌘ + A" },
+      ],
+    },
+    {
+      title: "文本格式",
+      shortcuts: [
+        { command: "粗体", windows: "Ctrl + B", mac: "⌘ + B" },
+        { command: "斜体", windows: "Ctrl + I", mac: "⌘ + I" },
+        { command: "下划线", windows: "Ctrl + U", mac: "⌘ + U" },
+        { command: "删除线", windows: "Ctrl + Shift + S", mac: "⌘ + Shift + S" },
+        { command: "高亮", windows: "Ctrl + Shift + H", mac: "⌘ + Shift + H" },
+        { command: "代码", windows: "Ctrl + E", mac: "⌘ + E" },
+        { command: "下标", windows: "Ctrl + ,", mac: "⌘ + ," },
+        { command: "上标", windows: "Ctrl + .", mac: "⌘ + ." },
+      ],
+    },
+    {
+      title: "段落格式",
+      shortcuts: [
+        { command: "普通文本", windows: "Ctrl + Alt + 0", mac: "⌘ + Alt + 0" },
+        { command: "标题 1", windows: "Ctrl + Alt + 1", mac: "⌘ + Alt + 1" },
+        { command: "标题 2", windows: "Ctrl + Alt + 2", mac: "⌘ + Alt + 2" },
+        { command: "标题 3", windows: "Ctrl + Alt + 3", mac: "⌘ + Alt + 3" },
+        { command: "标题 4", windows: "Ctrl + Alt + 4", mac: "⌘ + Alt + 4" },
+        { command: "标题 5", windows: "Ctrl + Alt + 5", mac: "⌘ + Alt + 5" },
+        { command: "标题 6", windows: "Ctrl + Alt + 6", mac: "⌘ + Alt + 6" },
+        { command: "有序列表", windows: "Ctrl + Shift + 7", mac: "⌘ + Shift + 7" },
+        { command: "无序列表", windows: "Ctrl + Shift + 8", mac: "⌘ + Shift + 8" },
+        { command: "任务列表", windows: "Ctrl + Shift + 9", mac: "⌘ + Shift + 9" },
+        { command: "引用", windows: "Ctrl + Shift + B", mac: "⌘ + Shift + B" },
+        { command: "代码块", windows: "Ctrl + Alt + C", mac: "⌘ + Alt + C" },
+      ],
+    },
+    {
+      title: "文本对齐",
+      shortcuts: [
+        { command: "左对齐", windows: "Ctrl + Shift + L", mac: "⌘ + Shift + L" },
+        { command: "居中对齐", windows: "Ctrl + Shift + E", mac: "⌘ + Shift + E" },
+        { command: "右对齐", windows: "Ctrl + Shift + R", mac: "⌘ + Shift + R" },
+        { command: "两端对齐", windows: "Ctrl + Shift + J", mac: "⌘ + Shift + J" },
+      ],
+    },
+    {
+      title: "文本选择",
+      shortcuts: [
+        { command: "向左扩展选择", windows: "Shift + ←", mac: "Shift + ←" },
+        { command: "向右扩展选择", windows: "Shift + →", mac: "Shift + →" },
+        { command: "向上扩展选择", windows: "Shift + ↑", mac: "Shift + ↑" },
+        { command: "向下扩展选择", windows: "Shift + ↓", mac: "Shift + ↓" },
+      ],
+    },
+  ];
+
+  // 检测操作系统
+  const isMac = typeof navigator !== "undefined" && navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Tooltip delayDuration={200}>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <button className="text-sm h-7 min-w-7 p-2 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 hover:cursor-pointer">
+              <KeyboardIcon className="size-4" />
+            </button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>键盘快捷键</p>
+        </TooltipContent>
+      </Tooltip>
+
+      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden p-0">
+        <div className="p-6">
+          <DialogTitle className="flex items-center gap-2 mb-6 text-xl font-semibold">
+            <KeyboardIcon className="size-6" />
+            键盘快捷键
+          </DialogTitle>
+
+          <div className="max-h-[60vh] overflow-y-auto pr-2">
+            <div className="space-y-6">
+              {shortcutSections.map((section, sectionIndex) => (
+                <div key={sectionIndex}>
+                  <h4 className="font-medium text-base text-gray-800 mb-3 pb-1 border-b border-gray-200">
+                    {section.title}
+                  </h4>
+                  <div className="grid grid-cols-1 gap-2">
+                    {section.shortcuts.map((shortcut, shortcutIndex) => (
+                      <div
+                        key={shortcutIndex}
+                        className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors"
+                      >
+                        <span className="text-sm text-gray-800 font-medium">{shortcut.command}</span>
+                        <kbd className="px-3 py-1.5 text-xs font-mono bg-gray-100 border border-gray-300 rounded-md shadow-sm">
+                          {isMac ? shortcut.mac : shortcut.windows}
+                        </kbd>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 pt-4 border-t text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+            <p className="flex items-center gap-2">
+              <span>💡</span>
+              <span>
+                这些快捷键基于{" "}
+                <a
+                  href="https://tiptap.dev/docs/editor/core-concepts/keyboard-shortcuts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline font-medium"
+                >
+                  Tiptap 官方文档
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 function Toolbar() {
   const { editor } = useEditorStore();
   const sections: { label: string; icon: LucideIcon; onClick?: () => void; isActive?: boolean }[][] = [
@@ -728,6 +869,7 @@ function Toolbar() {
       <Separator orientation="vertical" className="min-h-6 bg-neutral-300" />
       <FontSizeButton />
       <Separator orientation="vertical" className="min-h-6 bg-neutral-300" />
+      <KeyboardShortcuts />
     </div>
   );
 }
