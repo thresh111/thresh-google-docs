@@ -42,8 +42,8 @@ function DocumentMenu({ documentId, onNewTab, title }: DocumentMenuProps) {
 
         <RemoveDialog documentId={documentId}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <TrashIcon className={"size-4 mr-2"} />
-            <span>Delete</span>
+            <TrashIcon className={"size-4 mr-2 text-red-500"} />
+            <span className={"text-red-500"}>Delete</span>
           </DropdownMenuItem>
         </RemoveDialog>
       </DropdownMenuContent>
