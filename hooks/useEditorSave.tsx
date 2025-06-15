@@ -1,4 +1,4 @@
-import useEditorStore from "@/app/store/use-editor-store";
+import useEditorStore from "@/store/use-editor-store";
 
 function useEditorSave() {
   const { editor } = useEditorStore();

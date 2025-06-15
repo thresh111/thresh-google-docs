@@ -35,7 +35,7 @@ import {
   Undo2Icon,
 } from "lucide-react";
 import { BsFilePdf } from "react-icons/bs";
-import useEditorStore from "@/app/store/use-editor-store";
+import useEditorStore from "@/store/use-editor-store";
 import useEditorSave from "@/hooks/useEditorSave";
 
 // 菜单数据配置

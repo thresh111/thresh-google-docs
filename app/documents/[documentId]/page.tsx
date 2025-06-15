@@ -15,7 +15,7 @@ async function DocumentIdPage({ params }: DocumentIdPageProps) {
         <Navbar />
         <Toolbar />
       </div>
-      <div className={"pt-[140px] print:pt-0"}>
+      <div className={"pt-[180px] print:pt-0"}>
         <Editor />
       </div>
     </div>

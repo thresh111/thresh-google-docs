@@ -1,6 +1,6 @@
 "use client";
 
-import useEditorStore from "@/app/store/use-editor-store";
+import useEditorStore from "@/store/use-editor-store";
 import {
   DropdownMenu,
   DropdownMenuContent,
