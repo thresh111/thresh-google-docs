@@ -2,11 +2,10 @@ import { Doc, Id } from "@/convex/_generated/dataModel";
 import { TableCell, TableRow } from "@/components/ui/table";
 
 import { SiGoogledocs } from "react-icons/si";
-import { Building2Icon, CircleUserIcon, MoreVerticalIcon } from "lucide-react";
+import { Building2Icon, CircleUserIcon } from "lucide-react";
 
 import { format } from "date-fns";
 
-import { Button } from "@/components/ui/button";
 import DocumentMenu from "./document-menu";
 
 interface DocumentsRowProps {

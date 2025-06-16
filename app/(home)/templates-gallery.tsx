@@ -60,7 +60,7 @@ function TemplatesGallery() {
                       "size-full hover:border-blue-500 rounded-sm border hover:bg-blue-500 flex transition flex-col items-center justify-center gap-y-4 bg-white"
                     }
                   />
-                  <p className="text-sm font-medium text-gray-800">{template.label}</p>
+                  <p className="text-[12px] md:text-sm  font-medium text-gray-800">{template.label}</p>
                 </div>
               </CarouselItem>
             ))}

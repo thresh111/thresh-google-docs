@@ -16,7 +16,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 
 import { ReactNode, useState } from "react";
-import { toast } from "sonner";
+
 interface RemoveDialogProps {
   documentId: Id<"documents">;
   children: ReactNode;
