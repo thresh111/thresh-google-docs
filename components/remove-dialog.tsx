@@ -28,7 +28,9 @@ function RemoveDialog({ documentId, children }: RemoveDialogProps) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className={"w-full"}>{children}</AlertDialogTrigger>
+      <AlertDialogTrigger className={"w-full"} onClick={(e) => e.stopPropagation()}>
+        {children}
+      </AlertDialogTrigger>
 
       <AlertDialogContent onClick={(e) => e.stopPropagation()}>
         <AlertDialogHeader>

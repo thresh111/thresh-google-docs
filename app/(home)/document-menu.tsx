@@ -21,13 +21,18 @@ function DocumentMenu({ documentId, onNewTab, title }: DocumentMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} size={"icon"} className={"rounded-full"}>
+        <Button variant={"ghost"} size={"icon"} className={"rounded-full"} onClick={(e) => e.stopPropagation()}>
           <MoreVerticalIcon />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => onNewTab(documentId)}>
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            onNewTab(documentId);
+          }}
+        >
           <ExternalLinkIcon className={"size-4 mr-2"} />
           <span className="text-xs">Open in a new tab</span>
         </DropdownMenuItem>

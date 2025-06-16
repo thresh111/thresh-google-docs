@@ -45,8 +45,10 @@ function RenameDialog({ documentId, children, initialTitle }: RenameDialogProps)
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DialogContent>
+      <DialogTrigger asChild onClick={(e) => e.stopPropagation()}>
+        {children}
+      </DialogTrigger>
+      <DialogContent onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Rename {initialTitle}</DialogTitle>
