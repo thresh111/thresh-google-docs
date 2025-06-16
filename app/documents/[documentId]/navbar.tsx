@@ -42,7 +42,7 @@ import useEditorSave from "@/hooks/useEditorSave";
 
 function Navbar() {
   const { editor } = useEditorStore();
-  const { onSaveJSON, onSaveHTML, onSaveText } = useEditorSave(editor);
+  const { onSaveJSON, onSaveHTML, onSaveText } = useEditorSave();
 
   const menuConfig = [
     {
@@ -185,10 +185,10 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex items-start justify-between px-4 py-2 bg-white border-b">
+    <nav className="flex items-start justify-between px-4 py-4 bg-white border-b">
       <div className="flex items-start gap-3">
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity mt-1">
-          <Image src="/logo.svg" alt="logo" width={32} height={32} />
+        <Link href="/" className=" hover:opacity-80 transition-opacity">
+          <Image src="/logo.svg" alt="logo" width={36} height={36} />
         </Link>
         <div className="flex flex-col gap-1">
           <DocumentInput />
