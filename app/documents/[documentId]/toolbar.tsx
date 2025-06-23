@@ -807,8 +807,8 @@ function Toolbar() {
       {
         label: "Comment",
         icon: MessageCirclePlusIcon,
-        onClick: () => {},
-        isActive: false,
+        onClick: () => editor?.chain().focus().addPendingComment().run(),
+        isActive: editor?.isActive("liveblocksCommentMark"),
       },
       {
         label: "List Todo",

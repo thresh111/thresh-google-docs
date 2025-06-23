@@ -1,6 +1,9 @@
 import { Editor } from "./editor";
 import Navbar from "./navbar";
+import { Room } from "./room";
+import Threads from "./threads";
 import Toolbar from "./toolbar";
+import { Toaster } from "@/components/ui/sonner";
 
 interface DocumentIdPageProps {
   params: Promise<{ documentId: string }>;
@@ -16,7 +19,9 @@ async function DocumentIdPage({ params }: DocumentIdPageProps) {
         <Toolbar />
       </div>
       <div className={"pt-[160px] print:pt-0"}>
-        <Editor />
+        <Room>
+          <Editor />
+        </Room>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import useEditorStore from "@/store/use-editor-store";
 import { useRef, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 
@@ -7,6 +8,7 @@ function Ruler() {
   const MINIMUM_SPACE = 200;
   const PAGE_WIDTH = 816;
   const rulerRef = useRef<HTMLDivElement>(null);
+  const { editor } = useEditorStore();
 
   const [leftMargin, setLeftMargin] = useState(56);
   const [rightMargin, setRightMargin] = useState(200);
@@ -35,11 +37,13 @@ function Ruler() {
           const maxLeftPosition = PAGE_WIDTH - rightMargin - MINIMUM_SPACE;
           const newLeftPosition = Math.min(rawPosition, maxLeftPosition);
           setLeftMargin(newLeftPosition);
+          // editor?.chain().focus().setPageMargins({ left: newLeftPosition, right: rightMargin }).run();
         } else if (isDraggingRight) {
           const maxRightPosition = PAGE_WIDTH - (leftMargin + MINIMUM_SPACE);
           const newRightPosition = Math.max(PAGE_WIDTH - rawPosition, 0);
           const constrainedRightPosition = Math.min(newRightPosition, maxRightPosition);
           setRightMargin(constrainedRightPosition);
+          // editor?.chain().focus().setPageMargins({ left: leftMargin, right: constrainedRightPosition }).run();
         }
       }
     }

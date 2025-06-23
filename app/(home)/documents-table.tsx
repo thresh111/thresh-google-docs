@@ -59,7 +59,7 @@ function DocumentsTable({ status, documents, loadMore }: DocumentsTableProps) {
 
       <div className={"flex justify-center items-center"}>
         <Button variant={"ghost"} size={"sm"} onClick={() => loadMore(5)} disabled={status !== "CanLoadMore"}>
-          {status === "CanLoadMore" ? "Load More" : "No more documents"}
+          {documents?.length !== 0 && (status === "CanLoadMore" ? "Load More" : "No more documents")}
         </Button>
       </div>
     </div>
