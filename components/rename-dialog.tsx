@@ -18,6 +18,7 @@ import { ReactNode, useState } from "react";
 import { DrawerTrigger } from "./ui/drawer";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
 
 interface RenameDialogProps {
   documentId: Id<"documents">;
@@ -37,6 +38,7 @@ function RenameDialog({ documentId, children, initialTitle }: RenameDialogProps)
     updateDocument({ id: documentId, title: name.trim() || "Untitled" })
       .then(() => {
         setOpen(false);
+        toast.success("Document renamed");
       })
       .finally(() => {
         setIsUpdating(false);
