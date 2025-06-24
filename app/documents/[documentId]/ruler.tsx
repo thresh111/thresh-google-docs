@@ -79,14 +79,14 @@ function Ruler() {
     >
       <div id="ruler-container" className={"w-full h-full relative"}>
         <Marker
-          position={leftMargin}
+          position={leftMargin ?? LEFT_MARGIN_DEFAULT}
           isLeft
           isDragging={isDraggingLeft}
           onMouseDown={handleLeftMouseDown}
           onDoubleClick={handleLeftDoubleClick}
         />
         <Marker
-          position={rightMargin}
+          position={rightMargin ?? RIGHT_MARGIN_DEFAULT}
           isLeft={false}
           isDragging={isDraggingRight}
           onMouseDown={handleRightMouseDown}
