@@ -587,11 +587,11 @@ const SaveButton = () => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={onSaveJSON}>
+        <DropdownMenuItem onClick={() => onSaveJSON()}>
           <FileJsonIcon className="size-4 mr-2" />
           Save as JSON
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onSaveHTML}>
+        <DropdownMenuItem onClick={() => onSaveHTML()}>
           <GlobeIcon className="size-4 mr-2" />
           Save as HTML
         </DropdownMenuItem>
@@ -599,7 +599,7 @@ const SaveButton = () => {
           <BsFilePdf className="size-4 mr-2" />
           Save as PDF
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onSaveText}>
+        <DropdownMenuItem onClick={() => onSaveText()}>
           <TextIcon className="size-4 mr-2" />
           Save as Text
         </DropdownMenuItem>

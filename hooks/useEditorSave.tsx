@@ -12,14 +12,14 @@ function useEditorSave() {
     a.click();
   };
 
-  const onSaveJSON = (data: Doc<"documents">) => {
+  const onSaveJSON = (data?: Doc<"documents">) => {
     if (!editor) return;
     const content = editor.getJSON();
     const blob = new Blob([JSON.stringify(content, null, 2)], { type: "application/json" });
-    onDownload(blob, `${data.title}.json`);
+    onDownload(blob, `${data?.title ?? "Untitled"}.json`);
   };
 
-  const onSaveHTML = async (data: Doc<"documents">) => {
+  const onSaveHTML = async (data?: Doc<"documents">) => {
     if (!editor) return;
 
     try {
@@ -32,25 +32,25 @@ function useEditorSave() {
 
       // 替换模板中的占位符
       const fullHTML = template
-        .replace(/\{\{DOCUMENT_TITLE\}\}/g, data.title)
+        .replace(/\{\{DOCUMENT_TITLE\}\}/g, data?.title ?? "Untitled")
         .replace(/\{\{DOCUMENT_CONTENT\}\}/g, content)
         .replace(/\{\{EXPORT_DATE\}\}/g, new Date().toLocaleString("zh-CN"));
 
       const blob = new Blob([fullHTML], { type: "text/html" });
-      onDownload(blob, `${data.title}.html`);
+      onDownload(blob, `${data?.title ?? "Untitled"}.html`);
     } catch (error) {
       console.error("导出HTML失败:", error);
       const content = editor.getHTML();
       const blob = new Blob([content], { type: "text/html" });
-      onDownload(blob, `${data.title}.html`);
+      onDownload(blob, `${data?.title ?? "Untitled"}.html`);
     }
   };
 
-  const onSaveText = (data: Doc<"documents">) => {
+  const onSaveText = (data?: Doc<"documents">) => {
     if (!editor) return;
     const content = editor.getHTML();
     const blob = new Blob([content], { type: "text/plain" });
-    onDownload(blob, `${data.title}.txt`);
+    onDownload(blob, `${data?.title ?? "Untitled"}.txt`);
   };
 
   return {

@@ -13,15 +13,12 @@ type User = {
   id: string;
   name: string;
   avatar: string;
+  color?: string;
 };
 
 export function Room({ children }: { children: ReactNode }) {
   const { documentId } = useParams();
   const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -29,8 +26,13 @@ export function Room({ children }: { children: ReactNode }) {
       setUsers(users);
     } catch (error) {
       toast.error("Failed to fetch users");
+      console.log(error, "=========> error");
     }
   }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   return (
     <LiveblocksProvider
@@ -44,7 +46,17 @@ export function Room({ children }: { children: ReactNode }) {
         return await response.json();
       }}
       throttle={16}
-      resolveUsers={({ userIds }) => userIds.map((userId) => users.find((user) => user.id === userId) ?? undefined)}
+      resolveUsers={({ userIds }) =>
+        userIds.map((userId) => {
+          const user = users.find((user) => user.id === userId);
+          if (!user) return undefined;
+          return {
+            name: user.name,
+            avatar: user.avatar,
+            color: user.color || "#6b87d6",
+          };
+        })
+      }
       resolveMentionSuggestions={({ text }) => {
         let filterUsers = users;
         if (text) {
