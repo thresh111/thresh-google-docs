@@ -137,6 +137,10 @@ export const getById = query({
   handler: async (ctx, { id }) => {
     const document = await ctx.db.get(id);
 
+    if (!document) {
+      throw new ConvexError("Document not found");
+    }
+
     return document;
   },
 });
@@ -149,7 +153,6 @@ export const getByIds = query({
     const documents = [];
     for (const id of ids) {
       const document = await ctx.db.get(id);
-      console.log(document, "=========> document");
       if (document) {
         documents.push({ id: document._id, name: document.title });
       } else {

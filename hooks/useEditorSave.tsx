@@ -1,3 +1,4 @@
+import { Doc } from "@/convex/_generated/dataModel";
 import useEditorStore from "@/store/use-editor-store";
 
 function useEditorSave() {
@@ -11,14 +12,14 @@ function useEditorSave() {
     a.click();
   };
 
-  const onSaveJSON = () => {
+  const onSaveJSON = (data: Doc<"documents">) => {
     if (!editor) return;
     const content = editor.getJSON();
     const blob = new Blob([JSON.stringify(content, null, 2)], { type: "application/json" });
-    onDownload(blob, "document.json"); // TODO: Use document name
+    onDownload(blob, `${data.title}.json`);
   };
 
-  const onSaveHTML = async () => {
+  const onSaveHTML = async (data: Doc<"documents">) => {
     if (!editor) return;
 
     try {
@@ -31,25 +32,25 @@ function useEditorSave() {
 
       // 替换模板中的占位符
       const fullHTML = template
-        .replace(/\{\{DOCUMENT_TITLE\}\}/g, "Untitled Document") // TODO: 使用实际文档标题
+        .replace(/\{\{DOCUMENT_TITLE\}\}/g, data.title)
         .replace(/\{\{DOCUMENT_CONTENT\}\}/g, content)
         .replace(/\{\{EXPORT_DATE\}\}/g, new Date().toLocaleString("zh-CN"));
 
       const blob = new Blob([fullHTML], { type: "text/html" });
-      onDownload(blob, "document.html");
+      onDownload(blob, `${data.title}.html`);
     } catch (error) {
       console.error("导出HTML失败:", error);
       const content = editor.getHTML();
       const blob = new Blob([content], { type: "text/html" });
-      onDownload(blob, "document.html");
+      onDownload(blob, `${data.title}.html`);
     }
   };
 
-  const onSaveText = () => {
+  const onSaveText = (data: Doc<"documents">) => {
     if (!editor) return;
     const content = editor.getHTML();
     const blob = new Blob([content], { type: "text/plain" });
-    onDownload(blob, "document.txt"); // TODO: Use document name
+    onDownload(blob, `${data.title}.txt`);
   };
 
   return {

@@ -39,12 +39,33 @@ import useEditorStore from "@/store/use-editor-store";
 import useEditorSave from "@/hooks/useEditorSave";
 import Avatars from "./avatars";
 import { Inbox } from "./inbox";
+import { Doc } from "@/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+import RemoveDialog from "@/components/remove-dialog";
+import RenameDialog from "@/components/rename-dialog";
 
 // 菜单数据配置
 
-function Navbar() {
+function Navbar({ data }: { data: Doc<"documents"> }) {
+  const router = useRouter();
   const { editor } = useEditorStore();
   const { onSaveJSON, onSaveHTML, onSaveText } = useEditorSave();
+  const mutation = useMutation(api.document.create);
+
+  const onNewDocument = () => {
+    mutation({ title: "Untitled Document", content: "" })
+      .then((id) => {
+        toast.success("Document created");
+        router.push(`/documents/${id}`);
+      })
+      .catch(() => {
+        toast.error("Failed to create document");
+      });
+  };
 
   const menuConfig = [
     {
@@ -54,16 +75,16 @@ function Navbar() {
           type: "sub",
           trigger: { icon: FileIcon, label: "Save" },
           items: [
-            { icon: FileJsonIcon, label: "JSON", onClick: () => onSaveJSON() },
-            { icon: GlobeIcon, label: "HTML", onClick: () => onSaveHTML() },
+            { icon: FileJsonIcon, label: "JSON", onClick: () => onSaveJSON(data) },
+            { icon: GlobeIcon, label: "HTML", onClick: () => onSaveHTML(data) },
             { icon: BsFilePdf, label: "PDF", onClick: () => window.print() },
-            { icon: FileTextIcon, label: "Text", onClick: () => onSaveText() },
+            { icon: FileTextIcon, label: "Text", onClick: () => onSaveText(data) },
           ],
         },
-        { icon: FilePlusIcon, label: "New Document" },
+        { icon: FilePlusIcon, label: "New Document", onClick: () => onNewDocument() },
         { type: "separator" },
-        { icon: FilePenIcon, label: "Rename" },
-        { icon: TrashIcon, label: "Remove" },
+        { icon: FilePenIcon, label: "Rename", type: "rename" },
+        { icon: TrashIcon, label: "Remove", type: "remove" },
         { type: "separator" },
         {
           icon: PrinterIcon,
@@ -150,6 +171,38 @@ function Navbar() {
 
   // 渲染菜单项
   const renderMenuItem = (item: any, index: number) => {
+    if (item.type === "remove") {
+      return (
+        <RemoveDialog documentId={data._id}>
+          <MenubarItem
+            key={index}
+            className="cursor-pointer text-sm"
+            onClick={(e) => e.stopPropagation()}
+            onSelect={(e) => e.preventDefault()}
+          >
+            {item.icon && <item.icon className="size-4 mr-2" />}
+            {item.label}
+          </MenubarItem>
+        </RemoveDialog>
+      );
+    }
+
+    if (item.type === "rename") {
+      return (
+        <RenameDialog documentId={data._id} initialTitle={data.title}>
+          <MenubarItem
+            key={index}
+            className="cursor-pointer text-sm"
+            onClick={(e) => e.stopPropagation()}
+            onSelect={(e) => e.preventDefault()}
+          >
+            {item.icon && <item.icon className="size-4 mr-2" />}
+            {item.label}
+          </MenubarItem>
+        </RenameDialog>
+      );
+    }
+
     if (item.type === "separator") {
       return <MenubarSeparator key={index} />;
     }
@@ -193,7 +246,7 @@ function Navbar() {
           <Image src="/logo.svg" alt="logo" width={36} height={36} />
         </Link>
         <div className="flex flex-col gap-1">
-          <DocumentInput />
+          <DocumentInput title={data.title} id={data._id} />
           <div className="flex items-center">
             <Menubar className="border-none bg-transparent shadow-none h-auto p-0">
               {menuConfig.map((menu, menuIndex) => (

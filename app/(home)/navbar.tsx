@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import SearchInput from "./search-input";
-import { Button } from "@/components/ui/button";
 import { UserButton, OrganizationSwitcher } from "@clerk/nextjs";
 
 function Navbar() {
