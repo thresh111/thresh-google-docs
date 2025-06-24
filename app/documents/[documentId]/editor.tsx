@@ -28,8 +28,6 @@ import { useEffect, useRef } from "react";
 
 import Threads from "./threads";
 
-import Ruler from "./ruler";
-
 interface EditorProps {
   content?: string;
 }

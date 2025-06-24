@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { LiveblocksProvider, RoomProvider, ClientSideSuspense } from "@liveblocks/react/suspense";
 import { useParams } from "next/navigation";
 import FullscreenLoading from "@/components/fullscreen-loading";
@@ -22,17 +22,14 @@ export function Room({ children }: { children: ReactNode }) {
     fetchUsers();
   }, []);
 
-  const fetchUsers = useMemo(
-    () => async () => {
-      try {
-        const users = await getUsers();
-        setUsers(users);
-      } catch (error) {
-        toast.error("Failed to fetch users");
-      }
-    },
-    []
-  );
+  const fetchUsers = useCallback(async () => {
+    try {
+      const users = await getUsers();
+      setUsers(users);
+    } catch (error) {
+      toast.error("Failed to fetch users");
+    }
+  }, []);
 
   return (
     <LiveblocksProvider

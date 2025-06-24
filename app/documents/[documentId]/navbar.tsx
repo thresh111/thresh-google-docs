@@ -44,9 +44,55 @@ import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Editor } from "@tiptap/react";
+import { LucideIcon } from "lucide-react";
+import { IconType } from "react-icons";
 
 import RemoveDialog from "@/components/remove-dialog";
 import RenameDialog from "@/components/rename-dialog";
+
+// 类型定义
+interface MenuTrigger {
+  icon?: LucideIcon | IconType;
+  label: string;
+}
+
+interface BaseMenuItem {
+  icon?: LucideIcon | IconType;
+  label: string;
+  shortcut?: string;
+  onClick?: (editor?: Editor) => void;
+}
+
+interface SeparatorMenuItem {
+  type: "separator";
+}
+
+interface RemoveMenuItem {
+  type: "remove";
+  icon?: LucideIcon | IconType;
+  label: string;
+}
+
+interface RenameMenuItem {
+  type: "rename";
+  icon?: LucideIcon | IconType;
+  label: string;
+}
+
+interface SubMenuItem {
+  type: "sub";
+  trigger: MenuTrigger;
+  items: BaseMenuItem[];
+  onClick?: () => void;
+}
+
+type MenuItem = BaseMenuItem | SeparatorMenuItem | RemoveMenuItem | RenameMenuItem | SubMenuItem;
+
+interface MenuConfig {
+  trigger: string;
+  items: MenuItem[];
+}
 
 // 菜单数据配置
 
@@ -67,7 +113,11 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
       });
   };
 
-  const menuConfig = [
+  const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
+    editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: false }).run();
+  };
+
+  const menuConfig: MenuConfig[] = [
     {
       trigger: "File",
       items: [
@@ -101,13 +151,13 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
           icon: Undo2Icon,
           label: "Undo",
           shortcut: "⌘Z",
-          onClick: (editor: any) => editor?.chain().focus().undo().run(),
+          onClick: (editor?: Editor) => editor?.chain().focus().undo().run(),
         },
         {
           icon: Redo2Icon,
           label: "Redo",
           shortcut: "⌘Y",
-          onClick: (editor: any) => editor?.chain().focus().redo().run(),
+          onClick: (editor?: Editor) => editor?.chain().focus().redo().run(),
         },
       ],
     },
@@ -170,8 +220,8 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
   ];
 
   // 渲染菜单项
-  const renderMenuItem = (item: any, index: number) => {
-    if (item.type === "remove") {
+  const renderMenuItem = (item: MenuItem, index: number) => {
+    if ("type" in item && item.type === "remove") {
       return (
         <RemoveDialog documentId={data._id} key={index}>
           <MenubarItem className="cursor-pointer text-sm" onSelect={(e) => e.preventDefault()}>
@@ -182,7 +232,7 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
       );
     }
 
-    if (item.type === "rename") {
+    if ("type" in item && item.type === "rename") {
       return (
         <RenameDialog documentId={data._id} initialTitle={data.title} key={index}>
           <MenubarItem className="cursor-pointer text-sm" onSelect={(e) => e.preventDefault()}>
@@ -193,11 +243,11 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
       );
     }
 
-    if (item.type === "separator") {
+    if ("type" in item && item.type === "separator") {
       return <MenubarSeparator key={index} />;
     }
 
-    if (item.type === "sub") {
+    if ("type" in item && item.type === "sub") {
       return (
         <MenubarSub key={index}>
           <MenubarSubTrigger onClick={() => item.onClick?.()}>
@@ -205,7 +255,7 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
             {item.trigger.label}
           </MenubarSubTrigger>
           <MenubarSubContent>
-            {item.items.map((subItem: any, subIndex: number) => (
+            {item.items.map((subItem: BaseMenuItem, subIndex: number) => (
               <MenubarItem key={subIndex} onClick={() => subItem.onClick?.()}>
                 {subItem.icon && <subItem.icon className="size-4 mr-2" />}
                 {subItem.label}
@@ -217,16 +267,12 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
     }
 
     return (
-      <MenubarItem key={index} className="cursor-pointer text-sm" onClick={() => item.onClick?.(editor)}>
+      <MenubarItem key={index} className="cursor-pointer text-sm" onClick={() => item.onClick?.(editor || undefined)}>
         {item.icon && <item.icon className="size-4 mr-2" />}
         {item.label}
         {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
       </MenubarItem>
     );
-  };
-
-  const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
-    editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: false }).run();
   };
 
   return (
