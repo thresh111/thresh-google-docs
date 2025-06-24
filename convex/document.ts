@@ -14,8 +14,6 @@ export const get = query({
       throw new ConvexError("Unauthorized");
     }
 
-    console.log(user, "=========> use");
-
     const organizationId = (user.organization_id ?? undefined) as string | undefined;
 
     if (search && organizationId) {
@@ -140,5 +138,25 @@ export const getById = query({
     const document = await ctx.db.get(id);
 
     return document;
+  },
+});
+
+export const getByIds = query({
+  args: {
+    ids: v.array(v.id("documents")),
+  },
+  handler: async (ctx, { ids }) => {
+    const documents = [];
+    for (const id of ids) {
+      const document = await ctx.db.get(id);
+      console.log(document, "=========> document");
+      if (document) {
+        documents.push({ id: document._id, name: document.title });
+      } else {
+        documents.push({ id: id, name: "[Deleted]" });
+      }
+    }
+
+    return documents;
   },
 });
