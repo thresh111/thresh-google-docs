@@ -1,6 +1,5 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
 import { ClientSideSuspense } from "@liveblocks/react";
 import { useSelf, useOthers } from "@liveblocks/react/suspense";
 import Image from "next/image";

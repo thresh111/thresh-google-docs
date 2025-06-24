@@ -1,4 +1,3 @@
-import useEditorStore from "@/store/use-editor-store";
 import { useStorage, useMutation } from "@liveblocks/react";
 
 import { useRef, useState } from "react";

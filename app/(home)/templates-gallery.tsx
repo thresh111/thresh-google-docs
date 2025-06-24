@@ -2,14 +2,7 @@
 import { useState } from "react";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
-import {
-  Carousel,
-  CarouselItem,
-  CarouselApi,
-  CarouselContent,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselItem, CarouselContent, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 import { templates } from "@/constants";
@@ -22,6 +15,7 @@ function TemplatesGallery() {
 
   const handleTemplateClick = async (title: string, initialContent: string) => {
     setIsCreating(true);
+    console.log("=========> ", title, initialContent);
 
     create({ title, content: initialContent })
       .then((documentId) => {
@@ -48,8 +42,7 @@ function TemplatesGallery() {
                 >
                   <button
                     disabled={isCreating}
-                    onClick={() => handleTemplateClick(template.label, "")}
-                    // TODO: Add a initial content for each template
+                    onClick={() => handleTemplateClick(template.label, template.content)}
                     style={{
                       backgroundImage: `url(${template.imageUrl})`,
                       backgroundSize: "cover",

@@ -24,15 +24,24 @@ import { FontSizeExtension } from "@/extensions/font-size";
 import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 
 import { useStorage } from "@liveblocks/react/suspense";
+import { useEffect, useRef } from "react";
 
 import Threads from "./threads";
 
 import Ruler from "./ruler";
 
-export function Editor() {
-  const { setEditor } = useEditorStore();
+interface EditorProps {
+  content?: string;
+}
 
-  const liveblocks = useLiveblocksExtension();
+export function Editor({ content }: EditorProps) {
+  const { setEditor } = useEditorStore();
+  const contentSetRef = useRef(false);
+
+  const liveblocks = useLiveblocksExtension({
+    initialContent: content,
+    offlineSupport_experimental: true,
+  });
 
   const leftMargin = useStorage((root) => root.leftMargin);
   const rightMargin = useStorage((root) => root.rightMargin);
@@ -41,9 +50,18 @@ export function Editor() {
     immediatelyRender: false,
     onCreate({ editor }) {
       setEditor(editor);
+      if (content && content.trim() !== "" && !contentSetRef.current) {
+        setTimeout(() => {
+          if (!contentSetRef.current) {
+            editor.commands.setContent(content, false);
+            contentSetRef.current = true;
+          }
+        }, 50);
+      }
     },
     onDestroy() {
       setEditor(null);
+      contentSetRef.current = false;
     },
     onSelectionUpdate({ editor }) {
       setEditor(editor);
@@ -105,14 +123,36 @@ export function Editor() {
         defaultLineHeight: "normal",
       }),
     ],
-    content: `
-     <p>The Paragraph extension is not required, but it’s very likely you want to use it. It’s needed to write paragraphs of text. 🤓</p>
-  `,
+    content,
   });
+
+  useEffect(() => {
+    if (editor && content && content.trim() !== "" && !contentSetRef.current) {
+      const timer = setTimeout(() => {
+        const currentContent = editor.getHTML();
+        if (
+          !contentSetRef.current &&
+          (!currentContent ||
+            currentContent === "<p></p>" ||
+            currentContent.trim() === "" ||
+            currentContent === '<p class="is-editor-empty"><br class="ProseMirror-trailingBreak"></p>')
+        ) {
+          editor.commands.setContent(content, false);
+          contentSetRef.current = true;
+          editor.commands.focus();
+        }
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+  }, [editor, content]);
+
+  useEffect(() => {
+    contentSetRef.current = false;
+  }, [content]);
 
   return (
     <div className={"size-full overflow-x-auto bg-[#f9fbfd] px-4 print:p-0 print:bg-white print:overflow-visible"}>
-      <Ruler />
       <div className={"min-w-full flex justify-center py-4 print:py-0 mx-auto print:w-full print:min-w-0"}>
         <EditorContent editor={editor} />
         <Threads editor={editor} />

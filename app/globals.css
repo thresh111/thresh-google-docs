@@ -4,112 +4,239 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* 新增富文本编辑器主题色 */
+  --color-editor-background: var(--editor-background);
+  --color-editor-toolbar: var(--editor-toolbar);
+  --color-editor-selection: var(--editor-selection);
+  --color-editor-cursor: var(--editor-cursor);
+  /* 新增媒体播放器主题色 */
+  --color-media-background: var(--media-background);
+  --color-media-control: var(--media-control);
+  --color-media-progress: var(--media-progress);
+  /* 新增协作功能主题色 */
+  --color-collaboration-user1: var(--collaboration-user1);
+  --color-collaboration-user2: var(--collaboration-user2);
+  --color-collaboration-user3: var(--collaboration-user3);
+  --color-collaboration-user4: var(--collaboration-user4);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* 基础设置 - iOS风格的圆角 */
+  --radius: 0.75rem;
+
+  /* 主色系 - 基于 #4b69bd */
+  --primary: #4b69bd;
+  --primary-foreground: #ffffff;
+  --primary-50: #f0f4fe;
+  --primary-100: #dde7fc;
+  --primary-500: #4b69bd;
+  --primary-600: #3d5aa1;
+  --primary-700: #2f4785;
+
+  /* 背景和文字 - iOS风格的高对比度 */
+  --background: #ffffff;
+  --foreground: #1c1c1e;
+  --background-secondary: #f2f2f7;
+
+  /* 卡片和容器 */
+  --card: #ffffff;
+  --card-foreground: #1c1c1e;
+  --popover: #ffffff;
+  --popover-foreground: #1c1c1e;
+
+  /* 次要色彩 - 基于iOS灰色系统 */
+  --secondary: #f2f2f7;
+  --secondary-foreground: #1c1c1e;
+  --muted: #f2f2f7;
+  --muted-foreground: #8e8e93;
+
+  /* 强调色 - 基于主色的变体 */
+  --accent: #e3ebfc;
+  --accent-foreground: #4b69bd;
+
+  /* 功能色彩 */
+  --destructive: #ff3b30;
+  --destructive-foreground: #ffffff;
+  --warning: #ff9500;
+  --warning-foreground: #ffffff;
+  --success: #34c759;
+  --success-foreground: #ffffff;
+  --info: #007aff;
+  --info-foreground: #ffffff;
+
+  /* 边框和输入 */
+  --border: #d1d1d6;
+  --input: #f2f2f7;
+  --ring: #4b69bd;
+
+  /* 图表色彩 - 基于主色调和谐搭配 */
+  --chart-1: #4b69bd; /* 主蓝色 */
+  --chart-2: #34c759; /* 绿色 */
+  --chart-3: #ff9500; /* 橙色 */
+  --chart-4: #af52de; /* 紫色 */
+  --chart-5: #ff2d92; /* 粉色 */
+
+  /* 侧边栏 */
+  --sidebar: #f9f9fb;
+  --sidebar-foreground: #1c1c1e;
+  --sidebar-primary: #4b69bd;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e3ebfc;
+  --sidebar-accent-foreground: #4b69bd;
+  --sidebar-border: #e5e5ea;
+  --sidebar-ring: #4b69bd;
+
+  /* 富文本编辑器专用色彩 */
+  --editor-background: #ffffff;
+  --editor-toolbar: #f9f9fb;
+  --editor-selection: rgba(75, 105, 189, 0.15);
+  --editor-cursor: #4b69bd;
+
+  /* 媒体播放器专用色彩 */
+  --media-background: #f2f2f7;
+  --media-control: #4b69bd;
+  --media-progress: #4b69bd;
+
+  /* 协作功能用户色彩 */
+  --collaboration-user1: #4b69bd; /* 蓝色 */
+  --collaboration-user2: #34c759; /* 绿色 */
+  --collaboration-user3: #ff9500; /* 橙色 */
+  --collaboration-user4: #af52de; /* 紫色 */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* 深色模式 - iOS风格的深色系统 */
+  --background: #000000;
+  --foreground: #ffffff;
+  --background-secondary: #1c1c1e;
+
+  /* 卡片和容器 */
+  --card: #1c1c1e;
+  --card-foreground: #ffffff;
+  --popover: #2c2c2e;
+  --popover-foreground: #ffffff;
+
+  /* 主色在深色模式下的调整 */
+  --primary: #6b87d6;
+  --primary-foreground: #ffffff;
+
+  /* 次要色彩 */
+  --secondary: #2c2c2e;
+  --secondary-foreground: #ffffff;
+  --muted: #2c2c2e;
+  --muted-foreground: #98989d;
+
+  /* 强调色 */
+  --accent: #2c2c2e;
+  --accent-foreground: #6b87d6;
+
+  /* 功能色彩在深色模式下 */
+  --destructive: #ff453a;
+  --warning: #ff9f0a;
+  --success: #32d74b;
+  --info: #64d2ff;
+
+  /* 边框和输入 */
+  --border: #38383a;
+  --input: #2c2c2e;
+  --ring: #6b87d6;
+
+  /* 图表色彩深色版本 */
+  --chart-1: #6b87d6;
+  --chart-2: #32d74b;
+  --chart-3: #ff9f0a;
+  --chart-4: #bf5af2;
+  --chart-5: #ff375f;
+
+  /* 侧边栏深色版本 */
+  --sidebar: #1c1c1e;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #6b87d6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2c2c2e;
+  --sidebar-accent-foreground: #6b87d6;
+  --sidebar-border: #38383a;
+  --sidebar-ring: #6b87d6;
+
+  /* 富文本编辑器深色版本 */
+  --editor-background: #1c1c1e;
+  --editor-toolbar: #2c2c2e;
+  --editor-selection: rgba(107, 135, 214, 0.2);
+  --editor-cursor: #6b87d6;
+
+  /* 媒体播放器深色版本 */
+  --media-background: #2c2c2e;
+  --media-control: #6b87d6;
+  --media-progress: #6b87d6;
+
+  /* 协作功能用户色彩深色版本 */
+  --collaboration-user1: #6b87d6;
+  --collaboration-user2: #32d74b;
+  --collaboration-user3: #ff9f0a;
+  --collaboration-user4: #bf5af2;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* iOS风格的滚动条 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
 }
 
 @layer base {
