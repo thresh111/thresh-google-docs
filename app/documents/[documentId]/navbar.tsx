@@ -37,6 +37,7 @@ import {
 import { BsFilePdf } from "react-icons/bs";
 import useEditorStore from "@/store/use-editor-store";
 import useEditorSave from "@/hooks/useEditorSave";
+import Avatars from "./avatars";
 
 // 菜单数据配置
 
@@ -208,7 +209,11 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-2">{/* 这里可以添加分享按钮、用户头像等 */}</div>
+      <div className="flex items-center gap-2">
+        {/* 这里可以添加分享按钮、用户头像等 */}
+
+        <Avatars />
+      </div>
     </nav>
   );
 }
