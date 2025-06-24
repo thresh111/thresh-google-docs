@@ -8,13 +8,21 @@ import { Room } from "./room";
 import Toolbar from "./toolbar";
 
 import { api } from "@/convex/_generated/api";
+import { useRouter } from "next/navigation";
 
 interface DocumentProps {
   preloadedDocument: Preloaded<typeof api.document.getById>;
 }
 
 export function Document({ preloadedDocument }: DocumentProps) {
+  const router = useRouter();
+
   const document = usePreloadedQuery(preloadedDocument);
+
+  if (!document) {
+    router.replace("/");
+    return null;
+  }
 
   return (
     <Room>

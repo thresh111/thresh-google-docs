@@ -173,13 +173,8 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
   const renderMenuItem = (item: any, index: number) => {
     if (item.type === "remove") {
       return (
-        <RemoveDialog documentId={data._id}>
-          <MenubarItem
-            key={index}
-            className="cursor-pointer text-sm"
-            onClick={(e) => e.stopPropagation()}
-            onSelect={(e) => e.preventDefault()}
-          >
+        <RemoveDialog documentId={data._id} key={index}>
+          <MenubarItem className="cursor-pointer text-sm" onSelect={(e) => e.preventDefault()}>
             {item.icon && <item.icon className="size-4 mr-2" />}
             {item.label}
           </MenubarItem>
@@ -189,13 +184,8 @@ function Navbar({ data }: { data: Doc<"documents"> }) {
 
     if (item.type === "rename") {
       return (
-        <RenameDialog documentId={data._id} initialTitle={data.title}>
-          <MenubarItem
-            key={index}
-            className="cursor-pointer text-sm"
-            onClick={(e) => e.stopPropagation()}
-            onSelect={(e) => e.preventDefault()}
-          >
+        <RenameDialog documentId={data._id} initialTitle={data.title} key={index}>
+          <MenubarItem className="cursor-pointer text-sm" onSelect={(e) => e.preventDefault()}>
             {item.icon && <item.icon className="size-4 mr-2" />}
             {item.label}
           </MenubarItem>
