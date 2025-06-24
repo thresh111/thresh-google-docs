@@ -27,6 +27,7 @@ import { useStorage } from "@liveblocks/react/suspense";
 import { useEffect, useRef } from "react";
 
 import Threads from "./threads";
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants";
 
 interface EditorProps {
   content?: string;
@@ -78,7 +79,9 @@ export function Editor({ content }: EditorProps) {
     },
     editorProps: {
       attributes: {
-        style: `padding-left:${leftMargin ?? 56}px;padding-right:${rightMargin ?? 56}px`,
+        style: `padding-left:${leftMargin ?? LEFT_MARGIN_DEFAULT}px;padding-right:${
+          rightMargin ?? RIGHT_MARGIN_DEFAULT
+        }px`,
         class:
           "focus:outline-none print:border-0 bg-white  border-[#c7c7c7] border flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },

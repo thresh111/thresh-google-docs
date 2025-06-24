@@ -7,6 +7,7 @@ import FullscreenLoading from "@/components/fullscreen-loading";
 import { getDocuments, getUsers } from "./action";
 import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants";
 
 type User = {
   id: string;
@@ -56,7 +57,10 @@ export function Room({ children }: { children: ReactNode }) {
         return documents;
       }}
     >
-      <RoomProvider id={documentId as string} initialStorage={{ leftMargin: 56, rightMargin: 56 }}>
+      <RoomProvider
+        id={documentId as string}
+        initialStorage={{ leftMargin: LEFT_MARGIN_DEFAULT, rightMargin: RIGHT_MARGIN_DEFAULT }}
+      >
         <ClientSideSuspense fallback={<FullscreenLoading label={"Loading room..."} />}>{children}</ClientSideSuspense>
       </RoomProvider>
     </LiveblocksProvider>

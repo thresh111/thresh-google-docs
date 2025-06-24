@@ -1,3 +1,4 @@
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants";
 import { useStorage, useMutation } from "@liveblocks/react";
 
 import { useRef, useState } from "react";
@@ -40,11 +41,11 @@ function Ruler() {
         const rawPosition = Math.max(0, Math.min(PAGE_WIDTH, relativeX));
 
         if (isDraggingLeft) {
-          const maxLeftPosition = PAGE_WIDTH - (rightMargin ?? 56) - MINIMUM_SPACE;
+          const maxLeftPosition = PAGE_WIDTH - (rightMargin ?? RIGHT_MARGIN_DEFAULT) - MINIMUM_SPACE;
           const newLeftPosition = Math.min(rawPosition, maxLeftPosition);
           setLeftMargin(newLeftPosition);
         } else if (isDraggingRight) {
-          const maxRightPosition = PAGE_WIDTH - (leftMargin ?? 56) + MINIMUM_SPACE;
+          const maxRightPosition = PAGE_WIDTH - (leftMargin ?? LEFT_MARGIN_DEFAULT) + MINIMUM_SPACE;
           const newRightPosition = Math.max(PAGE_WIDTH - rawPosition, 0);
           const constrainedRightPosition = Math.min(newRightPosition, maxRightPosition);
           setRightMargin(constrainedRightPosition);
@@ -60,12 +61,12 @@ function Ruler() {
 
   const handleLeftDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setLeftMargin(56);
+    setLeftMargin(LEFT_MARGIN_DEFAULT);
   };
 
   const handleRightDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setRightMargin(200);
+    setRightMargin(RIGHT_MARGIN_DEFAULT);
   };
 
   return (
